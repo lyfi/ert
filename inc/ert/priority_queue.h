@@ -26,11 +26,11 @@ enum {
     PQ_PRIORITY_HIGHEST = 127,
 };
 
-#define PQ_EMPTY_SLOT               (-1)
-#define PQ_ITEM_SIZE(EleType)       (sizeof(PriorityQueueItem) + sizeof(EleType))
+#define PQ_EMPTY_SLOT                (-1)
+#define PQ_ITEM_SIZE(ele_type)       (sizeof(PriorityQueueItem) + sizeof(ele_type))
 
-#define PQ_STATIC_BUFFER(BufName,EleType,Capacity)      static uint8_t BufName[PQ_ITEM_SIZE(EleType) * Capacity]
-#define PQ_BUFFER(BufName,EleType,Capacity)             uint8_t BufName[PQ_ITEM_SIZE(EleType) * Capacity]
+#define PQ_STATIC_BUFFER(buf_name, ele_type, capacity)      static uint8_t buf_name[PQ_ITEM_SIZE(ele_type) * capacity]
+#define PQ_BUFFER(buf_name, ele_type, capacity)             uint8_t buf_name[PQ_ITEM_SIZE(ele_type) * capacity]
 
 void PriorityQueue_Init(PriorityQueue* pq, void* buffer, size_t capacity, size_t itemContentSize);
 RESULT PriorityQueue_Enqueue(PriorityQueue* pq, int8_t priority, const void* item);
