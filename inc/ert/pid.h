@@ -14,10 +14,10 @@ typedef struct {
     float Integrator;
     float IntegratorMax;
     float IntegratorMin;
-    float Error;
+    float PrevError;
 } Pid;
 
-void Pid_Init(Pid* self, float setPoint, float kp, float ki, float kd, float derivator, float integrator, float integratorMax, float integratorMin);
+RESULT Pid_Init(Pid* self, float setPoint, float kp, float ki, float kd, float derivator, float integrator, float integratorMax, float integratorMin);
 float Pid_Calculate(Pid* self, float pv); 
 
 #ifdef __cplusplus

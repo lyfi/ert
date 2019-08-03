@@ -1,12 +1,19 @@
 /* PID 计算 */
+/* Port from https://gist.github.com/bradley219/5373998
+*/
 
 #include <ert/ert.h>
 #include <ert/pid.h>
 
 
-void 
+RESULT 
 Pid_Init(Pid* self, float setPoint, float kp, float ki, float kd, float derivator, 
          float integrator, float integratorMax, float integratorMin) {
+
+    if(self->Derivator == 0.0) {
+        return RESULT_ERROR;
+    }
+
     self->SetPoint = setPoint;
     self->Kp = kp;
     self->Kd = kd;
@@ -15,26 +22,41 @@ Pid_Init(Pid* self, float setPoint, float kp, float ki, float kd, float derivato
     self->Integrator = integrator;
     self->IntegratorMax = integratorMax;
     self->IntegratorMin = integratorMin;
-    self->Error = 0.0;
+    self->PrevError = 0.0;
+
+    return RESULT_OK;
 }
 
 float 
 Pid_Calculate(Pid* self, float pv) {
-    self->Error = self->SetPoint - pv;
-    float P_value = self->Kp * self->Error;
-    float D_value = self->Kd * ( self->Error - self->Derivator);
-    self->Derivator = self->Error;
+    // Calculate error
+    float error = self->SetPoint - pv;
 
-    self->Integrator = self->Integrator + self->Error;
+    // Proportional term
+    float Pout = self->Kp * error;
 
-    if(self->Integrator > self->IntegratorMax){
-        self->Integrator = self->IntegratorMax;
+    // Integral term
+    self->Integrator += error * self->Derivator;
+    double Iout = self->Ki * self->Integrator;
+
+    // Derivative term
+    double derivative = (error - self->PrevError) / self->Derivator;
+    double Dout = self->Kd * derivative;
+
+    // Calculate total output
+    double output = Pout + Iout + Dout;
+
+    // Restrict to max/min
+    if(output > self->IntegratorMax) {
+        output = self->IntegratorMax;
     }
-    else if(self->Integrator < self->IntegratorMin) {
-        self->Integrator = self->IntegratorMin;
+    else if(output < self->IntegratorMin) {
+        output = self->IntegratorMin;
     }
 
-    float I_value = self->Integrator * self->Ki;
+    // Save error to previous error
+    self->PrevError = error;
 
-    return P_value + I_value + D_value;
+    return output;
+
 }
