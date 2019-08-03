@@ -1,5 +1,4 @@
-#include <stdint.h>
-
+#include <ert/ert.h>
 #include <ert/util.h>
 
 
