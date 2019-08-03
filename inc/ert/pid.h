@@ -17,7 +17,8 @@ typedef struct {
     float PrevError;
 } Pid;
 
-RESULT Pid_Init(Pid* self, float setPoint, float kp, float ki, float kd, float derivator, float integrator, float integratorMax, float integratorMin);
+RESULT Pid_Init(Pid* self, float setPoint, float kp, float ki, float kd, 
+                float derivator, float integrator, float integratorMax, float integratorMin);
 float Pid_Calculate(Pid* self, float pv); 
 
 #ifdef __cplusplus
