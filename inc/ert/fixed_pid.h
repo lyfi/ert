@@ -6,19 +6,21 @@ extern "C" {
 
 
 typedef struct {
-	Fixed32 Dt;
-	Fixed32 Max;
-	Fixed32 Min;
-	Fixed32 Kp;
-	Fixed32 Kd;
-	Fixed32 Ki;
-	Fixed32 PrevError;
-	Fixed32 Integral;
+    Fixed32 SetPoint;
+    Fixed32 Kp;
+    Fixed32 Ki;
+    Fixed32 Kd;
+    Fixed32 Derivator;
+    Fixed32 Integrator;
+    Fixed32 IntegratorMax;
+    Fixed32 IntegratorMin;
+    Fixed32 PrevError;
 } FixedPid;
 
 
-void FixedPid_Init(FixedPid* self, Fixed32 dt, Fixed32 pidMin, Fixed32 pidMax, Fixed32 kp, Fixed32 kd, Fixed32 ki);
-Fixed32 FixedPid_Calculate(FixedPid* self, Fixed32 setpoint, Fixed32 pv); 
+RESULT FixedPid_Init(FixedPid* self, Fixed32 setPoint, Fixed32 kp, Fixed32 ki, Fixed32 kd, Fixed32 derivator, 
+              Fixed32 integrator, Fixed32 integratorMax, Fixed32 integratorMin);
+Fixed32 FixedPid_Calculate(FixedPid* self, Fixed32 pv); 
 
 
 #ifdef __cplusplus

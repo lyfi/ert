@@ -19,6 +19,8 @@ file(GLOB TEST_SOURCES "test/*.cpp")
 
 add_library(ert STATIC ${LIB_SOURCES})
 
+add_definitions(-DFLOAT_ENABLED)
+
 # Add test cpp file
 add_executable(ert_test ${TEST_SOURCES})
 

@@ -2,6 +2,8 @@
 /* Port from https://gist.github.com/bradley219/5373998
 */
 
+#ifdef FLOAT_ENABLED
+
 #include <ert/ert.h>
 #include <ert/pid.h>
 
@@ -60,3 +62,5 @@ Pid_Calculate(Pid* self, float pv) {
     return output;
 
 }
+
+#endif //FLOAT_ENABLED
