@@ -19,7 +19,7 @@ typedef struct {
 
 
 RESULT FixedPid_Init(FixedPid* self, Fixed32 setPoint, Fixed32 kp, Fixed32 ki, Fixed32 kd, Fixed32 derivator, 
-              Fixed32 integrator, Fixed32 integratorMax, Fixed32 integratorMin);
+                     Fixed32 integratorMax, Fixed32 integratorMin);
 Fixed32 FixedPid_Calculate(FixedPid* self, Fixed32 pv); 
 
 

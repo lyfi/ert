@@ -19,7 +19,7 @@ typedef struct {
 } Pid;
 
 RESULT Pid_Init(Pid* self, float setPoint, float kp, float ki, float kd, 
-                float derivator, float integrator, float integratorMax, float integratorMin);
+                float derivator, float integratorMax, float integratorMin);
 float Pid_Calculate(Pid* self, float pv); 
 
 #endif //FLOAT_ENABLED

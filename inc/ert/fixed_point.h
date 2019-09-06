@@ -11,17 +11,43 @@ extern "C" {
 typedef int32_t Fixed32;
 typedef int64_t Fixed64;
 
+enum  {
+    Fixed32_ONE = 0x00010000
+};
 
-Fixed32 Fixed32_FromInt(int32_t n);
-int32_t Fixed32_Frac(Fixed32 a);
+// Optional
+inline Fixed32 Fixed32_FromFloat(float f) {
+    float temp = f * Fixed32_ONE;
+    temp += (temp >= 0) ? 0.5f : -0.5f;
+    return (Fixed32)temp;
+}
 
-#ifdef FLOAT_ENABLED
-Fixed32 Fixed32_FromFloat(float f);
-Fixed32 Fixed32_ToFloat(float T);
-#endif
+// Optional
+inline Fixed32 Fixed32_ToFloat(float T) {
+	return (float)((T)*((float)(1)/(float)(1 << FIXED32_Q)));
+}
 
-Fixed32 Fixed32_Mul(Fixed32 a, Fixed32 b);
-Fixed32 Fixed32_Div(Fixed32 a, Fixed32 b);
+inline Fixed32 Fixed32_FromInt(int32_t n) {
+	return (Fixed32)(n * Fixed32_ONE);
+}
+
+inline int32_t Fixed32_ToInt(Fixed32 a) {
+    return a >= 0 ? (a + (Fixed32_ONE >> 1)) / Fixed32_ONE : (a - (Fixed32_ONE >> 1)) / Fixed32_ONE;
+}
+
+
+inline int32_t Fixed32_Frac(Fixed32 a){
+	return a & FIXED32_FMASK;
+}
+
+inline Fixed32 Fixed32_Mul(Fixed32 a, Fixed32 b) {
+	return (Fixed32)(((Fixed64)a * (Fixed64)b) >> FIXED32_Q);	
+}
+
+inline Fixed32 Fixed32_Div(Fixed32 a, Fixed32 b) {
+	return (Fixed32)(((Fixed64)a << FIXED32_Q) / (Fixed64)b);
+}
+
 
 #ifdef __cplusplus
 }

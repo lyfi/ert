@@ -8,21 +8,21 @@
 
 RESULT
 FixedPid_Init(FixedPid* self, Fixed32 setPoint, Fixed32 kp, Fixed32 ki, Fixed32 kd, Fixed32 derivator, 
-              Fixed32 integrator, Fixed32 integratorMax, Fixed32 integratorMin) {
+              Fixed32 integratorMax, Fixed32 integratorMin) {
 
-    if(self->Derivator == 0) {
+    if(derivator == 0) {
         return RESULT_ERROR;
     }
 
     self->SetPoint = setPoint;
     self->Kp = kp;
-    self->Kd = kd;
     self->Ki = ki;
+    self->Kd = kd;
     self->Derivator = derivator;
-    self->Integrator = integrator;
     self->IntegratorMax = integratorMax;
     self->IntegratorMin = integratorMin;
-    self->PrevError = 0.0;
+    self->Integrator = 0;
+    self->PrevError = 0;
 
     return RESULT_OK;
 }

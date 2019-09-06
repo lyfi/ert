@@ -10,9 +10,9 @@
 
 RESULT 
 Pid_Init(Pid* self, float setPoint, float kp, float ki, float kd, float derivator, 
-         float integrator, float integratorMax, float integratorMin) {
+         float integratorMax, float integratorMin) {
 
-    if(self->Derivator == 0.0) {
+    if(derivator == 0.0) {
         return RESULT_ERROR;
     }
 
@@ -21,9 +21,10 @@ Pid_Init(Pid* self, float setPoint, float kp, float ki, float kd, float derivato
     self->Kd = kd;
     self->Ki = ki;
     self->Derivator = derivator;
-    self->Integrator = integrator;
     self->IntegratorMax = integratorMax;
     self->IntegratorMin = integratorMin;
+
+    self->Integrator = 0;
     self->PrevError = 0.0;
 
     return RESULT_OK;
