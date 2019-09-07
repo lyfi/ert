@@ -16,35 +16,43 @@ enum  {
 };
 
 // Optional
-inline Fixed32 Fixed32_FromFloat(float f) {
+static inline Fixed32 Fixed32_FromFloat(float f) {
     float temp = f * Fixed32_ONE;
     temp += (temp >= 0) ? 0.5f : -0.5f;
     return (Fixed32)temp;
 }
 
 // Optional
-inline Fixed32 Fixed32_ToFloat(float T) {
+static inline Fixed32 Fixed32_ToFloat(float T) {
 	return (float)((T)*((float)(1)/(float)(1 << FIXED32_Q)));
 }
 
-inline Fixed32 Fixed32_FromInt(int32_t n) {
+static inline Fixed32 Fixed32_FromInt(int32_t n) {
 	return (Fixed32)(n * Fixed32_ONE);
 }
 
-inline int32_t Fixed32_ToInt(Fixed32 a) {
+static inline int32_t Fixed32_ToInt(Fixed32 a) {
     return a >= 0 ? (a + (Fixed32_ONE >> 1)) / Fixed32_ONE : (a - (Fixed32_ONE >> 1)) / Fixed32_ONE;
 }
 
 
-inline int32_t Fixed32_Frac(Fixed32 a){
+static inline int32_t Fixed32_Frac(Fixed32 a){
 	return a & FIXED32_FMASK;
 }
 
-inline Fixed32 Fixed32_Mul(Fixed32 a, Fixed32 b) {
+static inline Fixed32 Fixed32_Add(Fixed32 a, Fixed32 b) {
+	return a + b;
+}
+
+static inline Fixed32 Fixed32_Minus(Fixed32 a, Fixed32 b) {
+	return a - b;
+}
+
+static inline Fixed32 Fixed32_Mul(Fixed32 a, Fixed32 b) {
 	return (Fixed32)(((Fixed64)a * (Fixed64)b) >> FIXED32_Q);	
 }
 
-inline Fixed32 Fixed32_Div(Fixed32 a, Fixed32 b) {
+static inline Fixed32 Fixed32_Div(Fixed32 a, Fixed32 b) {
 	return (Fixed32)(((Fixed64)a << FIXED32_Q) / (Fixed64)b);
 }
 
